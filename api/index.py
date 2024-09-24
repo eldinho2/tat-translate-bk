@@ -5,12 +5,14 @@ translator = Translator(from_lang="pt", to_lang="en")
 
 app = Flask(__name__)
 
+# Rota principal com GET
 @app.route('/', methods=['GET'])
 def index():
     response = make_response('Hello, World!')
-    response.headers.add("Access-Control-Allow-Origin", "*")  # Permitir todas as origens
+    response.headers.add("Access-Control-Allow-Origin", "*")
     return response
 
+# Rota principal com POST
 @app.route('/', methods=['POST'])
 def home():
     data = request.get_json()
@@ -27,7 +29,7 @@ def home():
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response, 201
 
-# Pré-vôo (OPTIONS) para permitir CORS em requisições POST/PUT/DELETE, etc.
+# Handler para o método OPTIONS (preflight)
 @app.route('/', methods=['OPTIONS'])
 def options():
     response = make_response()
@@ -36,6 +38,6 @@ def options():
     response.headers.add("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
     return response
 
-# Iniciando o servidor
+# Iniciar o servidor
 if __name__ == '__main__':
     app.run(debug=True)
