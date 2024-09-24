@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from translate import Translator
 
 translator = Translator(from_lang="pt", to_lang="en")
@@ -8,10 +8,12 @@ app = Flask(__name__)
 CORS(app)
 
 @app.route('/', methods=['GET'])
+@cross_origin()
 def index():
     return 'Hello, World!'
 
 @app.route('/', methods=['POST'])
+@cross_origin()
 def home():
     data = request.get_json()
 
