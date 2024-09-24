@@ -17,15 +17,15 @@ def index():
 def home():
     data = request.get_json()
 
-    if not data or 'texto' not in data:
+    if not data or 'text' not in data:
         response = jsonify({"error": "Dados inválidos ou incompletos"})
         response.headers.add("Access-Control-Allow-Origin", "*")
         return response, 400
 
-    texto = data['texto']
-    translation = translator.translate(texto)
+    text = data['text']
+    translation = translator.translate(text)
 
-    response = jsonify({"texto": translation})
+    response = jsonify({"text": translation})
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response, 201
 
