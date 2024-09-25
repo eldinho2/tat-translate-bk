@@ -17,15 +17,19 @@ def home():
     data = request.get_json()
 
     if data is None:
+        response.headers.add("Access-Control-Allow-Origin", "*")
         return jsonify({"error": "No data provided"}), 400
     
     if 'text' not in data:
+        response.headers.add("Access-Control-Allow-Origin", "*")
         return jsonify({"error": "No 'text' provided"}), 400
     
     if 'languageInput' not in data:
+        response.headers.add("Access-Control-Allow-Origin", "*")
         return jsonify({"error": "No 'languageInput' provided"}), 400
     
     if 'languageOutput' not in data:
+        response.headers.add("Access-Control-Allow-Origin", "*")
         return jsonify({"error": "No 'languageOutput' provided"}), 400
     
 
