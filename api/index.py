@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify, make_response
 from translate import Translator
 
-translator = Translator(from_lang="pt", to_lang="en")
 
 app = Flask(__name__)
 
@@ -17,12 +16,24 @@ def index():
 def home():
     data = request.get_json()
 
-    if not data or 'text' not in data:
-        response = jsonify({"error": "Dados inválidos ou incompletos"})
-        response.headers.add("Access-Control-Allow-Origin", "*")
-        return response, 400
+    if data is None:
+        return jsonify({"error": "No data provided"}), 400
+    
+    if 'text' not in data:
+        return jsonify({"error": "No 'text' provided"}), 400
+    
+    if 'languageInput' not in data:
+        return jsonify({"error": "No 'languageInput' provided"}), 400
+    
+    if 'languageOutput' not in data:
+        return jsonify({"error": "No 'languageOutput' provided"}), 400
+    
 
     text = data['text']
+    languageInput = data['languageInput']
+    languageOutput = data['languageOutput']
+
+    translator = Translator(from_lang=languageInput, to_lang=languageOutput)
     translation = translator.translate(text)
 
     response = jsonify({"text": translation})
